@@ -13,9 +13,9 @@ import java.awt.*;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @WebMvcTest(BeerController.class)
 class BeerControllerTest {
@@ -26,16 +26,17 @@ class BeerControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @Test
-    void getBeerById() {
 
-        mockMvc.perform(get("api/v1/beer" + UUID.randomUUID().toString())
+    @Test
+    void getBeerById() throws Exception {
+
+        mockMvc.perform(get("/api/v1/beer" + UUID.randomUUID().toString())
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void saveNewBeer() {
+    void saveNewBeer() throws Exception {
         BeerDto beerDto = BeerDto.builder().build();
         String beerDtoJson = objectMapper.writeValueAsString(beerDto);
 
@@ -46,6 +47,13 @@ class BeerControllerTest {
     }
 
     @Test
-    void updateBeerById() {
+    void updateBeerById() throws Exception {
+        BeerDto beerDto = BeerDto.builder().build();
+        String beerDtoJson = objectMapper.writeValueAsString(beerDto);
+
+        mockMvc.perform(put("/api/v1/beer" + UUID.randomUUID().toString())
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(beerDtoJson))
+            .andExpect(status().isNoContent());
     }
 }
