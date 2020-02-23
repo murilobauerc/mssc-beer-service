@@ -1,13 +1,11 @@
 package guru.springframework.msscbeerservice.domain;
 
-
-import lombok.*;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.UUID;
 
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -40,9 +38,11 @@ public class Beer {
 
     @Column(unique = true)
     private Long upc;
+
     private BigDecimal price;
 
     private Integer minOnHand;
+
     private Integer quantityToBrew;
 
 }
